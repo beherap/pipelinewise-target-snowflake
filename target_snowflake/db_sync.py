@@ -27,8 +27,6 @@ def validate_config(config):
         "user",
         "password",
         "warehouse",
-        "aws_access_key_id",
-        "aws_secret_access_key",
         "s3_bucket",
         "stage",
         "file_format",
@@ -304,11 +302,7 @@ class DbSync:
                 stream_schema_message["schema"], max_level=self.data_flattening_max_level
             )
 
-        self.s3 = boto3.client(
-            "s3",
-            aws_access_key_id=self.connection_config["aws_access_key_id"],
-            aws_secret_access_key=self.connection_config["aws_secret_access_key"],
-        )
+        self.s3 = boto3.client("s3")
 
     def open_connection(self):
         return snowflake.connector.connect(
